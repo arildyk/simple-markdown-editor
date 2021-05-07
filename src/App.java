@@ -13,13 +13,14 @@ public class App extends Application {
     private Parent main;
     private double xOffset, yOffset;
     private Scene scene;
+    private FXMLLoader loader;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         try {
 
-            FXMLLoader loader = new FXMLLoader();
+            loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Views/Main.fxml"));
 
             main = (Parent) loader.load();
@@ -46,6 +47,7 @@ public class App extends Application {
                     primaryStage.setY(event.getScreenY() - yOffset);
                 }
             });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
