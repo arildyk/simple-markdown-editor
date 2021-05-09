@@ -3,8 +3,12 @@ import java.util.ResourceBundle;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.AttributeProvider;
+import org.commonmark.renderer.html.AttributeProviderContext;
+import org.commonmark.renderer.html.AttributeProviderFactory;
 import org.commonmark.renderer.html.HtmlRenderer;
 
+import Models.FontAttributeProvider;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,14 +39,25 @@ public class AppController implements Initializable {
     public void parse() {
 
         // Change font
-        // Add image support
         // Add table support
         // Add task list support
         // Get link to open in another browser
+        // Fix enter bug
+        // Add 'onPaste' method
 
         Parser parser = Parser.builder().build();
+
+        HtmlRenderer renderer = HtmlRenderer.builder().attributeProviderFactory(new AttributeProviderFactory() {
+
+            @Override
+            public AttributeProvider create(AttributeProviderContext context) {
+                // TODO Auto-generated method stub
+                return new FontAttributeProvider();
+            }
+            
+        }).build();
+
         Node doc = parser.parse(input.getText());
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
         String outgoing = renderer.render(doc);
         output.getEngine().loadContent(outgoing);
     }
