@@ -28,7 +28,7 @@ public class App extends Application {
 
             primaryStage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
-            scene.getStylesheets().add("Views/text-area-background.css");
+            scene.getStylesheets().add("Views/application.css");
             primaryStage.setScene(scene);
             primaryStage.show();
 

@@ -1,8 +1,12 @@
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +30,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLAnchorElement;
 
-import Models.FontAttributeProvider;
+import Models.AppAttributeProvider;
 import javafx.application.Platform;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
@@ -35,6 +39,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 
 public class AppController implements Initializable {
     
@@ -62,7 +67,7 @@ public class AppController implements Initializable {
             @Override
             public AttributeProvider create(AttributeProviderContext context) {
                 // TODO Auto-generated method stub
-                return new FontAttributeProvider();
+                return new AppAttributeProvider();
             }
             
         }).build();
@@ -75,6 +80,21 @@ public class AppController implements Initializable {
         System.out.println(processedString);
 
         output.getEngine().loadContent(processedString);
+    }
+
+    public void chooseMdFile(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        File mdFileToLoad = fileChooser.showOpenDialog(null);
+
+        byte[] encoded = Files.readAllBytes(Paths.get(mdFileToLoad.toString()));
+
+        String content = new String(encoded, StandardCharsets.UTF_8);
+
+        input.setText(content);
     }
 
     @Override
@@ -131,7 +151,6 @@ public class AppController implements Initializable {
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
         });
-        
 
     }
 

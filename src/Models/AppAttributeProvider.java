@@ -8,7 +8,7 @@ import org.commonmark.node.Node;
 import org.commonmark.node.Paragraph;
 import org.commonmark.renderer.html.AttributeProvider;
 
-public class FontAttributeProvider implements AttributeProvider {
+public class AppAttributeProvider implements AttributeProvider {
     @Override
     public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
         if (node instanceof Paragraph) {
