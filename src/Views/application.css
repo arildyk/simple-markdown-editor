@@ -2,7 +2,7 @@
     -fx-text-fill: white ;
 
     -fx-background-insets: 0;
-    -fx-background-color: #3E3E46;
+    -fx-background-color: #1e1e1e;
     -fx-background-radius: 0;
 
     -fx-box-border: none;
@@ -13,16 +13,16 @@
 }
 
 .text-area .content {
-    -fx-background-color: #3E3E46;
+    -fx-background-color: #1e1e1e;
 }
 
 .text-area:focused .content {
-    -fx-background-color: #3E3E46;
+    -fx-background-color: #1e1e1e;
 }
 
 .viewport {
     -fx-background-insets: 0;
-    -fx-background-color: #3E3E46;
+    -fx-background-color: #1e1e1e;
     -fx-background-radius: 0, 0, 0, 0;
 
     -fx-focus-color: -fx-control-inner-background;
@@ -34,7 +34,7 @@
 .text-area:focused {
 
     -fx-background-insets: 0;
-    -fx-background-color: #3E3E46;
+    -fx-background-color: #1e1e1e;
     -fx-background-radius: 0;
 
     -fx-focus-color: -fx-control-inner-background;

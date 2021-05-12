@@ -21,7 +21,7 @@
                      </font></Button>
                   <Button layoutX="578.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="_" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
-            <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #3E3E46; -fx-background-radius: 0.5em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0.5em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0">
                <children>
                   <MenuBar layoutX="14.0" layoutY="8.0">
                     <menus>
@@ -34,9 +34,9 @@
                     </menus>
                   </MenuBar>
                </children></AnchorPane>
-            <AnchorPane layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #3E3E46; -fx-background-radius: 0em 0 0 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0">
+            <AnchorPane layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0em 0 0 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <TextArea id="input" fx:id="input" prefHeight="710.0" prefWidth="670.0" stylesheets="@text-area-background.css" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <TextArea id="input" fx:id="input" prefHeight="710.0" prefWidth="670.0" stylesheets="@application.css" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font name="Courier New" size="18.0" />
                      </font>

@@ -10,15 +10,7 @@
             "request": "launch",
             "vmArgs": "--module-path E:/Programs/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.web",
             "mainClass": "App",
-            "projectName": "MarkdownEditor_e5395957"
-        },
-        {
-            "type": "java",
-            "name": "Launch App",
-            "request": "launch",
-            "vmArgs": "--module-path E:/Programs/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.web",
-            "mainClass": "Controllers.App",
-            "projectName": "MarkdownEditor_e5395957"
+            "projectName": "simple-markdown-editor_1be588eb"
         }
     ]
 }
