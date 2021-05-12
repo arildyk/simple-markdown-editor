@@ -17,7 +17,7 @@
             <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #3E3E46; -fx-background-radius: 1em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #3E3E46; -fx-background-radius: 0em 0 0 1em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <TextArea id="input" fx:id="input" onKeyTyped="#parse" prefHeight="540.0" prefWidth="405.0" stylesheets="@text-area-background.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <TextArea id="input" fx:id="input" prefHeight="710.0" prefWidth="665.0" stylesheets="@text-area-background.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font name="Courier New" size="18.0" />
                      </font>
@@ -26,7 +26,7 @@
             </AnchorPane>
             <AnchorPane layoutX="651.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-radius: 0 0em 1em 0; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <WebView id="output" fx:id="output" layoutX="14.0" prefHeight="670.0" prefWidth="470.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <WebView id="output" fx:id="output" layoutX="14.0" prefHeight="710.0" prefWidth="653.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
          </children>

@@ -12,7 +12,9 @@
             "e:\\Programs\\JavaFX\\javafx-sdk-11.0.2\\lib\\javafx-swt.jar"
         ],
         "exclude": [
-            "lib/richtextfx-0.10.6.jar"
+            "lib/richtextfx-0.10.6.jar",
+            "lib/commonmark-ext-yaml-front-matter-0.17.1.jar",
+            "lib/commonmark-ext-autolink-0.17.1.jar"
         ]
     },
     "java.project.sourcePaths": [
