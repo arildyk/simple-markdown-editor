@@ -23,7 +23,7 @@
                </children></AnchorPane>
             <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0.5em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <MenuBar layoutX="14.0" layoutY="8.0">
+                  <MenuBar layoutX="8.0" layoutY="9.0" prefHeight="33.0" prefWidth="60.0" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
