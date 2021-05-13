@@ -6,7 +6,6 @@
 
 # VS Code
 .vscode/*
-!.vscode/launch.json
 
 # Ignore all local history of files
 **/.history
