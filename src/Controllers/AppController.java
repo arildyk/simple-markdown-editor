@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -36,10 +37,12 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class AppController implements Initializable {
     
@@ -53,6 +56,7 @@ public class AppController implements Initializable {
     private AnchorPane mainScene;
 
     private List<Extension> extensions;
+    private Path path;
 
     public void exit(ActionEvent actionEvent) {
         Platform.exit();
@@ -90,11 +94,42 @@ public class AppController implements Initializable {
 
         File mdFileToLoad = fileChooser.showOpenDialog(null);
 
-        byte[] encoded = Files.readAllBytes(Paths.get(mdFileToLoad.toString()));
+        path = Paths.get(mdFileToLoad.toString());
+
+        byte[] encoded = Files.readAllBytes(path);
 
         String content = new String(encoded, StandardCharsets.UTF_8);
 
         input.setText(content);
+    }
+
+    public void saveMdFile(ActionEvent event) throws IOException {
+        if (path == null) {
+            saveAs(event);
+        } else {
+            Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
+        }
+    }
+
+    public void saveAs(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
+
+        File mdFileToSave = fileChooser.showSaveDialog(null);
+
+        path = Paths.get(mdFileToSave.toString());
+
+        if (mdFileToSave != null) {
+            Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
+        }
+    }
+
+    public void minimize(ActionEvent event) {
+        Stage stage = (Stage) mainScene.getScene().getWindow();
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+        stage.setIconified(true);
     }
 
     @Override
