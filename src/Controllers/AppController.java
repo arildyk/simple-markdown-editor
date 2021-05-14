@@ -38,6 +38,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -54,6 +55,12 @@ public class AppController implements Initializable {
 
     @FXML
     private AnchorPane mainScene;
+
+    @FXML
+    private Label fileName;
+
+    @FXML
+    private Label filePathName;
 
     private List<Extension> extensions;
     private Path path;
@@ -94,13 +101,20 @@ public class AppController implements Initializable {
 
         File mdFileToLoad = fileChooser.showOpenDialog(null);
 
-        path = Paths.get(mdFileToLoad.toString());
+        if (mdFileToLoad != null) {
+            path = Paths.get(mdFileToLoad.toString());
 
-        byte[] encoded = Files.readAllBytes(path);
+            byte[] encoded = Files.readAllBytes(path);
 
-        String content = new String(encoded, StandardCharsets.UTF_8);
+            String content = new String(encoded, StandardCharsets.UTF_8);
 
-        input.setText(content);
+            fileName.setText(path.getFileName().toString());
+            filePathName.setText(path.getParent().toString());
+
+            input.setText(content);
+        }
+
+        
     }
 
     public void saveMdFile(ActionEvent event) throws IOException {
@@ -118,11 +132,21 @@ public class AppController implements Initializable {
 
         File mdFileToSave = fileChooser.showSaveDialog(null);
 
-        path = Paths.get(mdFileToSave.toString());
-
         if (mdFileToSave != null) {
+            path = Paths.get(mdFileToSave.toString());
+
+            fileName.setText(path.getFileName().toString());
+            filePathName.setText(path.getParent().toString());
+
             Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
         }
+    }
+
+    public void newMdFile(ActionEvent event) {
+        path = null;
+        input.clear();
+        fileName.setText("");
+        filePathName.setText("");
     }
 
     public void minimize(ActionEvent event) {
