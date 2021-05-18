@@ -1,2 +1,13 @@
 # simple-markdown-editor
-Powered by JavaFX, this application uses a Java framework called commonmark-java, a parser and renderer for Markdown text according to CommonMark spcecification. Click [here](https://github.com/commonmark/commonmark-java) for more information on commonmark-java. The most important aspects of this application are the abilities to open, edit, and save a Markdown file with GitHub Markdown flavouring.    
+
+A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. The most important aspects of this application are the abilities to open a Markdown file, allow the user to edit the file, and finally save the file.
+
+## Built With
+
+- [commonmark-java](https://github.com/commonmark/commonmark-java)
+- [JavaFX](https://openjfx.io/)
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+    

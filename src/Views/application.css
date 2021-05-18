@@ -47,14 +47,16 @@
 }
 
 .text-area .scroll-bar:vertical, 
-.web-view .scroll-bar:vertical {
+.web-view .scroll-bar:vertical,
+.web-view .scroll-bar:horizontal {
 
     -fx-background-color: transparent;
     -fx-border-color:transparent;
 }
 
 .text-area .scroll-bar:vertical .track, 
-.web-view .scroll-bar:vertical .track {
+.web-view .scroll-bar:vertical .track,
+.web-view .scroll-bar:horizontal .track {
 
 	-fx-background-color:transparent;
 	-fx-border-color:transparent;
@@ -66,7 +68,9 @@
 .text-area .scroll-bar:vertical .increment-button,
 .text-area .scroll-bar:vertical .decrement-button, 
 .web-view .scroll-bar:vertical .increment-button, 
-.web-view .scroll-bar:vertical .decrement-button {
+.web-view .scroll-bar:vertical .decrement-button,
+.web-view .scroll-bar:horizontal .increment-button, 
+.web-view .scroll-bar:horizontal .decrement-button {
  
     -fx-background-color:transparent;
 	-fx-background-radius: 0em;
@@ -85,7 +89,8 @@
 }
 
 .text-area .scroll-bar:vertical .thumb,
-.web-view .scroll-bar:vertical .thumb {
+.web-view .scroll-bar:vertical .thumb,
+.web-view .scroll-bar:horizontal .thumb {
 
     -fx-background-color:gray;
 	-fx-background-insets: 2, 0, 0;

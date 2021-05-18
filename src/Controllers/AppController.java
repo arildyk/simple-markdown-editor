@@ -37,9 +37,12 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -64,10 +67,36 @@ public class AppController implements Initializable {
 
     private List<Extension> extensions;
     private Path path;
+    private boolean fileChange = false;
 
-    public void exit(ActionEvent actionEvent) {
-        Platform.exit();
+    /**
+     * Closes the application.
+     * @param actionEvent
+     * @throws IOException
+     */
+
+    public void exit(ActionEvent event) throws IOException {
+        if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
+            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                saveMdFile(event);
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                Platform.exit();
+            }
+
+        } else { 
+            Platform.exit();
+        }
+        
     }
+
+    /**
+     * Parses the editor into HTML content.
+     */
 
     public void parse() {
 
@@ -77,23 +106,51 @@ public class AppController implements Initializable {
 
             @Override
             public AttributeProvider create(AttributeProviderContext context) {
-                // TODO Auto-generated method stub
+
+                // Add the attribute
                 return new AppAttributeProvider();
             }
             
         }).build();
 
         Node doc = parser.parse(input.getText());
+
         String outgoing = renderer.render(doc);
         String outString = outgoing.replace("\n", "<br>");
         String processedString = outString.replace("><br><", ">\n<");
 
+        String htmlString = "<!doctype html>\n" +
+        "        <html>\n" +
+        "          <head>\n" +
+        "            <meta charset=\"utf-8\"/>\n" +
+        "            <style type=\"text/css\">\n" +
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-Regular.ttf); }\n" +
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-Bold.ttf); font-weight: bold; }\n" +
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-Italic.ttf); font-style: italic; }\n" + 
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBold.ttf); font-weight: bolder; }\n" + 
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBoldItalic.ttf); font-weight: bolder; font-style: italic; }\n" + 
+        "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-BoldItalic.ttf); font-weight: bold; font-style: italic; }\n" +
+        "              body { font-family: EB Garamond; }\n" +
+        "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
+        "              pre { background-color: #f2f2f2; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }\n" +
+        "              h1 {border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
+        "              h2 {border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
+        "            </style>\n" +
+        "          </head>\n" +
+        "          <body>\n" +
+        processedString +
+        "          </body>\n" +
+        "        </html>";
+
+        output.getEngine().loadContent(htmlString);
+
+        fileChange = true;
+
         System.out.println(processedString);
 
-        output.getEngine().loadContent(processedString);
     }
 
-    public void chooseMdFile(ActionEvent event) throws IOException {
+    public void open() throws IOException {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
@@ -112,20 +169,63 @@ public class AppController implements Initializable {
             filePathName.setText(path.getParent().toString());
 
             input.setText(content);
-        }
 
-        
+            fileChange = false;
+        }
     }
 
+    /**
+     * Opens a file chooser for the user to choose a markdown file for editing.
+     * @param event
+     * @throws IOException
+     */
+
+    public void chooseMdFile(ActionEvent event) throws IOException {
+
+        if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
+            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                saveMdFile(event);
+                open();
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                open();
+            }
+
+        } else {
+            open();
+        }
+    }
+
+    /**
+     * Saves the edits done to the selected markdown file. 
+     * If a file hasn't been previously selected, the saveAs(event) function will be called.
+     * @param event
+     * @throws IOException
+     */
+
     public void saveMdFile(ActionEvent event) throws IOException {
+
         if (path == null) {
             saveAs(event);
         } else {
             Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
         }
+
+        fileChange = false;
     }
 
+    /**
+     * Opens a file chooser where a file will be created where the user will have to specify it's name and location.
+     * @param event
+     * @throws IOException
+     */
+
     public void saveAs(ActionEvent event) throws IOException {
+
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
@@ -140,28 +240,63 @@ public class AppController implements Initializable {
 
             Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
         }
+
+        fileChange = false;
+
     }
 
-    public void newMdFile(ActionEvent event) {
+    public void newMd() {
         path = null;
         input.clear();
         fileName.setText("");
         filePathName.setText("");
     }
 
+    /**
+     * Clears the editor and unselects a file if it has been selected.
+     * @param event
+     * @throws IOException
+     */
+
+    public void newMdFile(ActionEvent event) throws IOException {
+
+        if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
+            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                saveMdFile(event);
+                newMd();
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                newMd();
+            }
+
+        } else { 
+            newMd();
+        }
+    }
+
+    /**
+     * Minimizes the window.
+     * @param event
+     */
+
     public void minimize(ActionEvent event) {
         Stage stage = (Stage) mainScene.getScene().getWindow();
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
 
+        // A list of extensions to used in the parsing process
         extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create(), InsExtension.create(), ImageAttributesExtension.create(), TaskListItemsExtension.create());
 
+        // Open links in the markdown file in the default browser
         output.getEngine().getLoadWorker().stateProperty().addListener((observableValue, oldValuState, nState) -> {
 
             if (nState == State.SUCCEEDED) {
@@ -185,19 +320,20 @@ public class AppController implements Initializable {
                             HTMLAnchorElement anchorElement = (HTMLAnchorElement) target;
                             String href = anchorElement.getHref();
 
-                            //Opening the URL outside the WebView
+                            // Prevent from opening in the WebView
                             evt.preventDefault();
 
+                            // Open in default browser
                             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+
                                 try {
                                     Desktop.getDesktop().browse(new URI(href));
                                 } catch (IOException e) {
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 } catch (URISyntaxException e) {
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
+
                             }
                         }
 
@@ -207,6 +343,7 @@ public class AppController implements Initializable {
             }
         });
 
+        // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
         });

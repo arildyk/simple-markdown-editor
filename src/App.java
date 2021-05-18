@@ -19,20 +19,24 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         try {
-
             loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Views/Main.fxml"));
 
             main = (Parent) loader.load();
+            
             scene = new Scene(main);
 
             primaryStage.initStyle(StageStyle.TRANSPARENT);
+
             scene.setFill(Color.TRANSPARENT);
             scene.getStylesheets().add("Views/application.css");
+
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            main.setOnMousePressed(new EventHandler<MouseEvent>(){
+            // Make the window draggable
+            main.setOnMousePressed(new EventHandler<MouseEvent>() {
+
                 @Override
                 public void handle(MouseEvent event) {
                     xOffset = event.getSceneX();
@@ -40,7 +44,8 @@ public class App extends Application {
                 }
             });
 
-            main.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            main.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
                 @Override
                 public void handle(MouseEvent event) {
                     primaryStage.setX(event.getScreenX() - xOffset);
