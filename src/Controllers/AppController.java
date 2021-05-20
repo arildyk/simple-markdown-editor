@@ -119,7 +119,7 @@ public class AppController implements Initializable {
         String outString = outgoing.replace("\n", "<br>");
         String processedString = outString.replace("><br><", ">\n<");
 
-        String htmlString = "<!doctype html>\n" +
+        String htmlString = "<!DOCTYPE html>\n" +
         "        <html>\n" +
         "          <head>\n" +
         "            <meta charset=\"utf-8\"/>\n" +
@@ -133,8 +133,8 @@ public class AppController implements Initializable {
         "              body { font-family: EB Garamond; }\n" +
         "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
         "              pre { background-color: #f2f2f2; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }\n" +
-        "              h1 {border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
-        "              h2 {border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
+        "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
+        "              h2 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "            </style>\n" +
         "          </head>\n" +
         "          <body>\n" +
