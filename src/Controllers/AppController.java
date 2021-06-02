@@ -136,8 +136,10 @@ public class AppController implements Initializable {
         "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "              h2 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "            </style>\n" +
+        "            <link href=\"" + getClass().getResource("prism.css") + "\"" + " rel=\"stylesheet\"" + " type=\"text/css\"" +  " />\n" +
         "          </head>\n" +
         "          <body>\n" +
+        "            <script src=\"" + getClass().getResource("prism.js") + "\"" + " type=\"text/javascript\"" + "></script>\n" +
         processedString +
         "          </body>\n" +
         "        </html>";
