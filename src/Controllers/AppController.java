@@ -24,6 +24,9 @@ import org.commonmark.renderer.html.AttributeProvider;
 import org.commonmark.renderer.html.AttributeProviderContext;
 import org.commonmark.renderer.html.AttributeProviderFactory;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -119,6 +122,17 @@ public class AppController implements Initializable {
         String outString = outgoing.replace("\n", "<br>");
         String processedString = outString.replace("><br><", ">\n<");
 
+        org.jsoup.nodes.Document document = Jsoup.parse(processedString);
+        Elements codes = document.getElementsByTag("code");
+
+        for (Element code: codes) {
+            String newCode = code.html().replace("<br>", "\n");
+            String formattedCode = newCode.replace("&lt;", "<");
+            code.text(formattedCode.replace("&gt;", ">"));
+        }
+        
+        String finalProcess = document.toString();
+
         String htmlString = "<!DOCTYPE html>\n" +
         "        <html>\n" +
         "          <head>\n" +
@@ -130,9 +144,10 @@ public class AppController implements Initializable {
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBold.ttf); font-weight: bolder; }\n" + 
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBoldItalic.ttf); font-weight: bolder; font-style: italic; }\n" + 
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-BoldItalic.ttf); font-weight: bold; font-style: italic; }\n" +
-        "              body { font-family: EB Garamond; }\n" +
+        "              body { font-family: EB Garamond; font-size: 110%; }\n" +
         "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
         "              pre { background-color: #f2f2f2; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }\n" +
+        "              code { background-color: #f2f2f2; padding: 5px; border-radius: 8px; }\n" +
         "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "              h2 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "            </style>\n" +
@@ -140,7 +155,7 @@ public class AppController implements Initializable {
         "          </head>\n" +
         "          <body>\n" +
         "            <script src=\"" + getClass().getResource("prism.js") + "\"" + " type=\"text/javascript\"" + "></script>\n" +
-        processedString +
+        finalProcess +
         "          </body>\n" +
         "        </html>";
 
@@ -148,7 +163,7 @@ public class AppController implements Initializable {
 
         fileChange = true;
 
-        System.out.println(processedString);
+        System.out.println(finalProcess);
 
     }
 

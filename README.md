@@ -8,8 +8,9 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 
 - [commonmark-java](https://github.com/commonmark/commonmark-java)
 - [JavaFX](https://openjfx.io/)
+- [Prism.js](https://prismjs.com/)
+- [JSoup](https://jsoup.org/)
 
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-    
