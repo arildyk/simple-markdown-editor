@@ -15,13 +15,18 @@
    <children>
       <AnchorPane prefHeight="760.0" prefWidth="1340.0" style="-fx-background-radius: 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: white; -fx-background-radius: 0em 0.5em 0em 0em;" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane id="topRightBar" fx:id="topRightBar" prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: white; -fx-background-radius: 0em 0.5em 0em 0em;" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button id="exitButton" fx:id="exitButton" layoutX="630.0" mnemonicParsing="false" onAction="#exit" prefHeight="40.0" prefWidth="40.0" text="×" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font name="EB Garamond ExtraBold" size="16.0" />
                      </font></Button>
-                  <Button layoutX="590.0" mnemonicParsing="false" onAction="#minimize" prefHeight="40.0" prefWidth="40.0" text="_" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                  <Button id="maximizeButton" fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximize" prefHeight="40.0" prefWidth="40.0" text="⬜" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="EB Garamond ExtraBold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="590.0" mnemonicParsing="false" onAction="#minimize" prefHeight="40.0" prefWidth="40.0" text="_" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font name="EB Garamond ExtraBold" size="16.0" />
                      </font></Button>
@@ -34,7 +39,7 @@
                      </font>
                   </Label>
                </children></AnchorPane>
-            <AnchorPane prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0.5em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane id="topLeftBar" fx:id="topLeftBar" prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0.5em 0em 0em 0em;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="fileName" prefHeight="40.0" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
@@ -60,7 +65,7 @@
                      </padding>
                   </MenuBar>
                </children></AnchorPane>
-            <AnchorPane layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0em 0 0 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0">
+            <AnchorPane id="textAreaContainer" fx:id="textAreaContainer" layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0em 0 0 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0">
                <children>
                   <TextArea id="input" fx:id="input" prefHeight="710.0" prefWidth="670.0" stylesheets="@application.css" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                      <font>
@@ -69,7 +74,7 @@
                   </TextArea>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="651.0" layoutY="84.0" prefHeight="720.0" prefWidth="670.0" style="-fx-background-radius: 0 0em 0.5em 0; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+            <AnchorPane id="webViewContainer" fx:id="webViewContainer" layoutX="651.0" layoutY="84.0" prefHeight="720.0" prefWidth="670.0" style="-fx-background-radius: 0 0em 0.5em 0; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                <children>
                   <WebView id="output" fx:id="output" layoutX="4.0" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="710.0" prefWidth="670.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>

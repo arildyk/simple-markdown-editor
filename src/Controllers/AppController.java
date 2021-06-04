@@ -40,6 +40,7 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -49,6 +50,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class AppController implements Initializable {
@@ -67,6 +69,21 @@ public class AppController implements Initializable {
 
     @FXML
     private Label filePathName;
+
+    @FXML
+    private AnchorPane textAreaContainer;
+
+    @FXML
+    private AnchorPane webViewContainer;
+
+    @FXML
+    private AnchorPane topLeftBar;
+
+    @FXML
+    private AnchorPane topRightBar;
+
+    @FXML
+    private Button maximizeButton;
 
     private List<Extension> extensions;
     private Path path;
@@ -146,8 +163,6 @@ public class AppController implements Initializable {
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-BoldItalic.ttf); font-weight: bold; font-style: italic; }\n" +
         "              body { font-family: EB Garamond; font-size: 110%; }\n" +
         "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
-        "              pre { background-color: #f2f2f2; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }\n" +
-        "              code { background-color: #f2f2f2; padding: 5px; border-radius: 8px; }\n" +
         "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "              h2 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "            </style>\n" +
@@ -305,6 +320,33 @@ public class AppController implements Initializable {
 
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    public void maximize(ActionEvent event) {
+        Stage stage = (Stage) mainScene.getScene().getWindow();
+
+        if (stage.isMaximized()) {
+            stage.setMaximized(false);
+            AnchorPane.setRightAnchor(textAreaContainer, 670.0);
+            AnchorPane.setLeftAnchor(webViewContainer, 670.0);
+            AnchorPane.setRightAnchor(topLeftBar, 670.0);
+            AnchorPane.setLeftAnchor(topRightBar, 670.0);
+            maximizeButton.setText("⬜");
+        } else {
+            stage.setMaximized(true);
+            AnchorPane.setRightAnchor(textAreaContainer, stage.getWidth() / 2.0);
+            AnchorPane.setLeftAnchor(webViewContainer, stage.getWidth() / 2.0);
+            AnchorPane.setRightAnchor(topLeftBar, stage.getWidth() / 2.0);
+            AnchorPane.setLeftAnchor(topRightBar, stage.getWidth() / 2.0);
+            
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+            maximizeButton.setText("❒");
+        }
     }
 
     @Override
