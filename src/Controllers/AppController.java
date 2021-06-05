@@ -147,6 +147,13 @@ public class AppController implements Initializable {
             String formattedCode = newCode.replace("&lt;", "<");
             code.text(formattedCode.replace("&gt;", ">"));
         }
+
+        Elements imageElements = document.getElementsByTag("img");
+
+        for(Element img : imageElements) {
+            String srcValue = img.attr("src");
+            img.attr("src", path.getParent().toUri() + "/" + srcValue);
+        }
         
         String finalProcess = document.toString();
 
@@ -162,6 +169,7 @@ public class AppController implements Initializable {
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBoldItalic.ttf); font-weight: bolder; font-style: italic; }\n" + 
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-BoldItalic.ttf); font-weight: bold; font-style: italic; }\n" +
         "              body { font-family: EB Garamond; font-size: 110%; }\n" +
+        "              img { max-width: 100%; max-height: 100%; }\n" +
         "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
         "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
         "              h2 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
@@ -331,7 +339,7 @@ public class AppController implements Initializable {
             AnchorPane.setLeftAnchor(webViewContainer, 670.0);
             AnchorPane.setRightAnchor(topLeftBar, 670.0);
             AnchorPane.setLeftAnchor(topRightBar, 670.0);
-            maximizeButton.setText("⬜");
+            maximizeButton.setText("☐");
         } else {
             stage.setMaximized(true);
             AnchorPane.setRightAnchor(textAreaContainer, stage.getWidth() / 2.0);

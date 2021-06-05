@@ -17,18 +17,18 @@
          <children>
             <AnchorPane id="topRightBar" fx:id="topRightBar" prefHeight="40.0" prefWidth="670.0" style="-fx-background-color: white; -fx-background-radius: 0em 0.5em 0em 0em;" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button id="exitButton" fx:id="exitButton" layoutX="630.0" mnemonicParsing="false" onAction="#exit" prefHeight="40.0" prefWidth="40.0" text="×" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Button id="exitButton" fx:id="exitButton" layoutX="630.0" mnemonicParsing="false" onAction="#exit" prefHeight="40.0" prefWidth="40.0" text="✕" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="EB Garamond ExtraBold" size="16.0" />
+                        <Font name="EB Garamond Regular" size="16.0" />
                      </font></Button>
-                  <Button id="maximizeButton" fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximize" prefHeight="40.0" prefWidth="40.0" text="⬜" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                  <Button id="maximizeButton" fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximize" prefHeight="40.0" prefWidth="40.0" text="☐" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="EB Garamond ExtraBold" size="16.0" />
+                        <Font name="EB Garamond Regular" size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="590.0" mnemonicParsing="false" onAction="#minimize" prefHeight="40.0" prefWidth="40.0" text="_" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                  <Button layoutX="590.0" mnemonicParsing="false" onAction="#minimize" prefHeight="40.0" prefWidth="40.0" text="—" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="EB Garamond ExtraBold" size="16.0" />
+                        <Font name="EB Garamond Regular" size="16.0" />
                      </font></Button>
                   <Label fx:id="filePathName" prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
