@@ -10,6 +10,7 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 - [JavaFX](https://openjfx.io/)
 - [Prism.js](https://prismjs.com/)
 - [JSoup](https://jsoup.org/)
+- [RichTextFX](https://github.com/FXMisc/RichTextFX)
 
 ## License
 

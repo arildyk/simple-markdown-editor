@@ -10,7 +10,7 @@
     -fx-border-width: -1;
 
     -fx-font-family: Consolas, 'Courier New', monospace;
-    -fx-font-size: 16;
+    -fx-font-size: 16px;
 }
 
 .code-area .content {
@@ -21,9 +21,20 @@
     -fx-background-color: #1e1e1e;
 }
 
-.code-area .text { -fx-fill: white; -fx-text-fill: white;}
+.code-area .text { 
+    -fx-fill: white; 
+}
 
-.code-area .lineno { -fx-background-color: #1e1e1e; }
+.code-area .lineno { 
+    -fx-background-color: #1e1e1e;
+    -fx-padding: 0 10px 0 20px;
+}
+
+.code-area .lineno .text{ 
+    -fx-background-color: #1e1e1e; 
+    -fx-font-size: 12.04685715983pt; 
+    -fx-fill: #858585;
+}
 
 .caret {
     -fx-stroke: white;
@@ -52,7 +63,7 @@
     -fx-border-width: -1;
 }
 
-.code-area .scroll-bar:vertical, 
+.virtualized-scroll-pane .scroll-bar:vertical, 
 .web-view .scroll-bar:vertical,
 .web-view .scroll-bar:horizontal {
 
@@ -60,7 +71,7 @@
     -fx-border-color:transparent;
 }
 
-.code-area .scroll-bar:vertical .track, 
+.virtualized-scroll-pane .scroll-bar:vertical .track, 
 .web-view .scroll-bar:vertical .track,
 .web-view .scroll-bar:horizontal .track {
 
@@ -71,8 +82,8 @@
 }
 
  
-.code-area .scroll-bar:vertical .increment-button,
-.code-area .scroll-bar:vertical .decrement-button, 
+.virtualized-scroll-pane .scroll-bar:vertical .increment-button,
+.virtualized-scroll-pane .scroll-bar:vertical .decrement-button, 
 .web-view .scroll-bar:vertical .increment-button, 
 .web-view .scroll-bar:vertical .decrement-button,
 .web-view .scroll-bar:horizontal .increment-button, 
@@ -84,8 +95,8 @@
  
 }
 
-.code-area .scroll-bar .increment-arrow,
-.code-area .scroll-bar .decrement-arrow,
+.virtualized-scroll-pane .increment-arrow,
+.virtualized-scroll-pane .scroll-bar .decrement-arrow,
 .web-view .scroll-bar .increment-arrow,
 .web-view .scroll-bar .decrement-arrow {
 
@@ -94,7 +105,7 @@
 
 }
 
-.code-area .scroll-bar:vertical .thumb,
+.virtualized-scroll-pane .scroll-bar:vertical .thumb,
 .web-view .scroll-bar:vertical .thumb,
 .web-view .scroll-bar:horizontal .thumb {
 

@@ -429,11 +429,11 @@ public class AppController implements Initializable {
         VirtualizedScrollPane<CodeArea> sp = new VirtualizedScrollPane<>(input);
 
         codeAreaContainer.getChildren().add(sp);
-    
+
         AnchorPane.setLeftAnchor(sp, 0.0);
         AnchorPane.setRightAnchor(sp, 0.0);
-        AnchorPane.setBottomAnchor(sp, 0.0);
-        AnchorPane.setTopAnchor(sp, 0.0); 
+        AnchorPane.setBottomAnchor(sp, 5.0);
+        AnchorPane.setTopAnchor(sp, 5.0); 
         
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
