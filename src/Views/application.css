@@ -1,6 +1,4 @@
-.text-area {
-    -fx-text-fill: white ;
-
+.code-area {
     -fx-background-insets: 0;
     -fx-background-color: #1e1e1e;
     -fx-background-radius: 0;
@@ -15,12 +13,20 @@
     -fx-font-size: 16;
 }
 
-.text-area .content {
+.code-area .content {
     -fx-background-color: #1e1e1e;
 }
 
-.text-area:focused .content {
+.code-area:focused .content {
     -fx-background-color: #1e1e1e;
+}
+
+.code-area .text { -fx-fill: white; -fx-text-fill: white;}
+
+.code-area .lineno { -fx-background-color: #1e1e1e; }
+
+.caret {
+    -fx-stroke: white;
 }
 
 .viewport {
@@ -34,7 +40,7 @@
     -fx-border-width: -1;
 }
 
-.text-area:focused {
+.code-area:focused {
 
     -fx-background-insets: 0;
     -fx-background-color: #1e1e1e;
@@ -46,7 +52,7 @@
     -fx-border-width: -1;
 }
 
-.text-area .scroll-bar:vertical, 
+.code-area .scroll-bar:vertical, 
 .web-view .scroll-bar:vertical,
 .web-view .scroll-bar:horizontal {
 
@@ -54,7 +60,7 @@
     -fx-border-color:transparent;
 }
 
-.text-area .scroll-bar:vertical .track, 
+.code-area .scroll-bar:vertical .track, 
 .web-view .scroll-bar:vertical .track,
 .web-view .scroll-bar:horizontal .track {
 
@@ -65,8 +71,8 @@
 }
 
  
-.text-area .scroll-bar:vertical .increment-button,
-.text-area .scroll-bar:vertical .decrement-button, 
+.code-area .scroll-bar:vertical .increment-button,
+.code-area .scroll-bar:vertical .decrement-button, 
 .web-view .scroll-bar:vertical .increment-button, 
 .web-view .scroll-bar:vertical .decrement-button,
 .web-view .scroll-bar:horizontal .increment-button, 
@@ -78,8 +84,8 @@
  
 }
 
-.text-area .scroll-bar .increment-arrow,
-.text-area .scroll-bar .decrement-arrow,
+.code-area .scroll-bar .increment-arrow,
+.code-area .scroll-bar .decrement-arrow,
 .web-view .scroll-bar .increment-arrow,
 .web-view .scroll-bar .decrement-arrow {
 
@@ -88,7 +94,7 @@
 
 }
 
-.text-area .scroll-bar:vertical .thumb,
+.code-area .scroll-bar:vertical .thumb,
 .web-view .scroll-bar:vertical .thumb,
 .web-view .scroll-bar:horizontal .thumb {
 

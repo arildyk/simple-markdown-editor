@@ -24,6 +24,9 @@ import org.commonmark.renderer.html.AttributeProvider;
 import org.commonmark.renderer.html.AttributeProviderContext;
 import org.commonmark.renderer.html.AttributeProviderFactory;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -45,7 +48,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -55,9 +57,6 @@ import javafx.stage.Stage;
 
 public class AppController implements Initializable {
     
-    @FXML
-    private TextArea input;
-
     @FXML
     private WebView output;
 
@@ -71,7 +70,7 @@ public class AppController implements Initializable {
     private Label filePathName;
 
     @FXML
-    private AnchorPane textAreaContainer;
+    private AnchorPane codeAreaContainer;
 
     @FXML
     private AnchorPane webViewContainer;
@@ -84,6 +83,8 @@ public class AppController implements Initializable {
 
     @FXML
     private Button maximizeButton;
+
+    private CodeArea input;
 
     private List<Extension> extensions;
     private Path path;
@@ -208,7 +209,7 @@ public class AppController implements Initializable {
             fileName.setText(path.getFileName().toString());
             filePathName.setText(path.getParent().toString());
 
-            input.setText(content);
+            input.replaceText(content);
 
             fileChange = false;
         }
@@ -335,14 +336,14 @@ public class AppController implements Initializable {
 
         if (stage.isMaximized()) {
             stage.setMaximized(false);
-            AnchorPane.setRightAnchor(textAreaContainer, 670.0);
+            AnchorPane.setRightAnchor(codeAreaContainer, 670.0);
             AnchorPane.setLeftAnchor(webViewContainer, 670.0);
             AnchorPane.setRightAnchor(topLeftBar, 670.0);
             AnchorPane.setLeftAnchor(topRightBar, 670.0);
             maximizeButton.setText("☐");
         } else {
             stage.setMaximized(true);
-            AnchorPane.setRightAnchor(textAreaContainer, stage.getWidth() / 2.0);
+            AnchorPane.setRightAnchor(codeAreaContainer, stage.getWidth() / 2.0);
             AnchorPane.setLeftAnchor(webViewContainer, stage.getWidth() / 2.0);
             AnchorPane.setRightAnchor(topLeftBar, stage.getWidth() / 2.0);
             AnchorPane.setLeftAnchor(topRightBar, stage.getWidth() / 2.0);
@@ -410,6 +411,30 @@ public class AppController implements Initializable {
             }
         });
 
+        input = new CodeArea();
+        input.getStylesheets().add("Views/application.css");
+        input.setPrefHeight(710.0);
+        input.setPrefWidth(670.0);
+
+        AnchorPane.setLeftAnchor(input, 0.0);
+        AnchorPane.setRightAnchor(input, 0.0);
+        AnchorPane.setBottomAnchor(input, 5.0);
+        AnchorPane.setTopAnchor(input, 5.0);
+
+        input.prefWidthProperty().bind(codeAreaContainer.widthProperty());
+        input.prefHeightProperty().bind(codeAreaContainer.heightProperty());
+        input.setParagraphGraphicFactory(LineNumberFactory.get(input));
+        input.setWrapText(true);
+
+        VirtualizedScrollPane<CodeArea> sp = new VirtualizedScrollPane<>(input);
+
+        codeAreaContainer.getChildren().add(sp);
+    
+        AnchorPane.setLeftAnchor(sp, 0.0);
+        AnchorPane.setRightAnchor(sp, 0.0);
+        AnchorPane.setBottomAnchor(sp, 0.0);
+        AnchorPane.setTopAnchor(sp, 0.0); 
+        
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
