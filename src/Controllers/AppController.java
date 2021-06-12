@@ -50,12 +50,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class AppController implements Initializable {
+public final class AppController implements Initializable {
     
     @FXML
     private WebView output;
@@ -84,9 +85,12 @@ public class AppController implements Initializable {
     @FXML
     private Button maximizeButton;
 
-    private CodeArea input;
+    private final CodeArea input = new CodeArea();
 
-    private List<Extension> extensions;
+    // A list of extensions to used in the parsing process
+    private final List<Extension> extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create(), InsExtension.create(), ImageAttributesExtension.create(), TaskListItemsExtension.create());
+    
+    private final VirtualizedScrollPane<CodeArea> sp = new VirtualizedScrollPane<>(input);
     private Path path;
     private boolean fileChange = false;
 
@@ -96,9 +100,11 @@ public class AppController implements Initializable {
      * @throws IOException
      */
 
-    public void exit(ActionEvent event) throws IOException {
+    public final void exit(ActionEvent event) throws IOException {
         if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
-            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+            final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -119,11 +125,11 @@ public class AppController implements Initializable {
      * Parses the editor into HTML content.
      */
 
-    public void parse() {
+    public final void parse() {
 
-        Parser parser = Parser.builder().extensions(extensions).build();
+        final Parser parser = Parser.builder().extensions(extensions).build();
 
-        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).attributeProviderFactory(new AttributeProviderFactory() {
+        final HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).attributeProviderFactory(new AttributeProviderFactory() {
 
             @Override
             public AttributeProvider create(AttributeProviderContext context) {
@@ -134,31 +140,31 @@ public class AppController implements Initializable {
             
         }).build();
 
-        Node doc = parser.parse(input.getText());
+        final Node doc = parser.parse(input.getText());
 
-        String outgoing = renderer.render(doc);
-        String outString = outgoing.replace("\n", "<br>");
-        String processedString = outString.replace("><br><", ">\n<");
+        final String outgoing = renderer.render(doc);
+        final String outString = outgoing.replace("\n", "<br>");
+        final String processedString = outString.replace("><br><", ">\n<");
 
-        org.jsoup.nodes.Document document = Jsoup.parse(processedString);
-        Elements codes = document.getElementsByTag("code");
+        final org.jsoup.nodes.Document document = Jsoup.parse(processedString);
+        final Elements codes = document.getElementsByTag("code");
 
         for (Element code: codes) {
-            String newCode = code.html().replace("<br>", "\n");
-            String formattedCode = newCode.replace("&lt;", "<");
+            final String newCode = code.html().replace("<br>", "\n");
+            final String formattedCode = newCode.replace("&lt;", "<");
             code.text(formattedCode.replace("&gt;", ">"));
         }
 
-        Elements imageElements = document.getElementsByTag("img");
+        final Elements imageElements = document.getElementsByTag("img");
 
-        for(Element img : imageElements) {
-            String srcValue = img.attr("src");
+        for (Element img : imageElements) {
+            final String srcValue = img.attr("src");
             img.attr("src", path.getParent().toUri() + "/" + srcValue);
         }
         
-        String finalProcess = document.toString();
+        final String finalProcess = document.toString();
 
-        String htmlString = "<!DOCTYPE html>\n" +
+        final String htmlString = "<!DOCTYPE html>\n" +
         "        <html>\n" +
         "          <head>\n" +
         "            <meta charset=\"utf-8\"/>\n" +
@@ -191,20 +197,20 @@ public class AppController implements Initializable {
 
     }
 
-    public void open() throws IOException {
-        FileChooser fileChooser = new FileChooser();
+    public final void open() throws IOException {
+        final FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-        File mdFileToLoad = fileChooser.showOpenDialog(null);
+        final File mdFileToLoad = fileChooser.showOpenDialog(null);
 
         if (mdFileToLoad != null) {
             path = Paths.get(mdFileToLoad.toString());
 
-            byte[] encoded = Files.readAllBytes(path);
+            final byte[] encoded = Files.readAllBytes(path);
 
-            String content = new String(encoded, StandardCharsets.UTF_8);
+            final String content = new String(encoded, StandardCharsets.UTF_8);
 
             fileName.setText(path.getFileName().toString());
             filePathName.setText(path.getParent().toString());
@@ -221,10 +227,12 @@ public class AppController implements Initializable {
      * @throws IOException
      */
 
-    public void chooseMdFile(ActionEvent event) throws IOException {
+    public final void chooseMdFile(ActionEvent event) throws IOException {
 
         if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
-            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+            final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -248,7 +256,7 @@ public class AppController implements Initializable {
      * @throws IOException
      */
 
-    public void saveMdFile(ActionEvent event) throws IOException {
+    public final void saveMdFile(ActionEvent event) throws IOException {
 
         if (path == null) {
             saveAs(event);
@@ -265,13 +273,13 @@ public class AppController implements Initializable {
      * @throws IOException
      */
 
-    public void saveAs(ActionEvent event) throws IOException {
+    public final void saveAs(ActionEvent event) throws IOException {
 
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
 
-        File mdFileToSave = fileChooser.showSaveDialog(null);
+        final File mdFileToSave = fileChooser.showSaveDialog(null);
 
         if (mdFileToSave != null) {
             path = Paths.get(mdFileToSave.toString());
@@ -286,7 +294,7 @@ public class AppController implements Initializable {
 
     }
 
-    public void newMd() {
+    public final void newMd() {
         path = null;
         input.clear();
         fileName.setText("");
@@ -299,10 +307,12 @@ public class AppController implements Initializable {
      * @throws IOException
      */
 
-    public void newMdFile(ActionEvent event) throws IOException {
+    public final void newMdFile(ActionEvent event) throws IOException {
 
         if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
-            Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+            final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -324,15 +334,15 @@ public class AppController implements Initializable {
      * @param event
      */
 
-    public void minimize(ActionEvent event) {
+    public final void minimize(ActionEvent event) {
         Stage stage = (Stage) mainScene.getScene().getWindow();
 
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 
-    public void maximize(ActionEvent event) {
-        Stage stage = (Stage) mainScene.getScene().getWindow();
+    public final void maximize(ActionEvent event) {
+        final Stage stage = (Stage) mainScene.getScene().getWindow();
 
         if (stage.isMaximized()) {
             stage.setMaximized(false);
@@ -348,7 +358,7 @@ public class AppController implements Initializable {
             AnchorPane.setRightAnchor(topLeftBar, stage.getWidth() / 2.0);
             AnchorPane.setLeftAnchor(topRightBar, stage.getWidth() / 2.0);
             
-            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+            final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
             stage.setX(bounds.getMinX());
             stage.setY(bounds.getMinY());
@@ -361,32 +371,29 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
-        // A list of extensions to used in the parsing process
-        extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create(), InsExtension.create(), ImageAttributesExtension.create(), TaskListItemsExtension.create());
-
         // Open links in the markdown file in the default browser
         output.getEngine().getLoadWorker().stateProperty().addListener((observableValue, oldValuState, nState) -> {
 
             if (nState == State.SUCCEEDED) {
 
-                Document document = output.getEngine().getDocument();
+                final Document document = output.getEngine().getDocument();
 
-                NodeList nodeList = document.getElementsByTagName("a");
+                final NodeList nodeList = document.getElementsByTagName("a");
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
 
-                    org.w3c.dom.Node node= nodeList.item(i);
+                    final org.w3c.dom.Node node = nodeList.item(i);
 
-                    EventTarget eventTarget = (EventTarget) node;
+                    final EventTarget eventTarget = (EventTarget) node;
 
                     eventTarget.addEventListener("click", new EventListener() {
                         
                         @Override
                         public void handleEvent(Event evt) {
                             
-                            EventTarget target = evt.getCurrentTarget();
-                            HTMLAnchorElement anchorElement = (HTMLAnchorElement) target;
-                            String href = anchorElement.getHref();
+                            final EventTarget target = evt.getCurrentTarget();
+                            final HTMLAnchorElement anchorElement = (HTMLAnchorElement) target;
+                            final String href = anchorElement.getHref();
 
                             // Prevent from opening in the WebView
                             evt.preventDefault();
@@ -411,7 +418,6 @@ public class AppController implements Initializable {
             }
         });
 
-        input = new CodeArea();
         input.getStylesheets().add("Views/application.css");
         input.setPrefHeight(710.0);
         input.setPrefWidth(670.0);
@@ -424,20 +430,30 @@ public class AppController implements Initializable {
         input.prefWidthProperty().bind(codeAreaContainer.widthProperty());
         input.prefHeightProperty().bind(codeAreaContainer.heightProperty());
         input.setParagraphGraphicFactory(LineNumberFactory.get(input));
+        input.setLineHighlighterFill(Color.web("#282828"));
+        input.setLineHighlighterOn(true);
         input.setWrapText(true);
-
-        VirtualizedScrollPane<CodeArea> sp = new VirtualizedScrollPane<>(input);
 
         codeAreaContainer.getChildren().add(sp);
 
         AnchorPane.setLeftAnchor(sp, 0.0);
         AnchorPane.setRightAnchor(sp, 0.0);
         AnchorPane.setBottomAnchor(sp, 5.0);
-        AnchorPane.setTopAnchor(sp, 5.0); 
+        AnchorPane.setTopAnchor(sp, 5.0);
+        
+        AnchorPane.setRightAnchor(codeAreaContainer, mainScene.getWidth() / 2.0);
+        AnchorPane.setLeftAnchor(webViewContainer, mainScene.getWidth() / 2.0);
+        output.setPrefWidth(mainScene.getWidth() / 2.0);
+
+        AnchorPane.setLeftAnchor(output, mainScene.getWidth() / 2.0);
+        AnchorPane.setRightAnchor(output, 5.0);
+        AnchorPane.setBottomAnchor(output, 5.0);
+        AnchorPane.setTopAnchor(output, 5.0);
         
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            parse();
+            //parse();
+            System.out.println(mainScene.getWidth() / 2.0);
         });
 
     }

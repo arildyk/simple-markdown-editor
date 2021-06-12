@@ -10,7 +10,7 @@
     -fx-border-width: -1;
 
     -fx-font-family: Consolas, 'Courier New', monospace;
-    -fx-font-size: 16px;
+    -fx-font-size: 12pt;
 }
 
 .code-area .content {
@@ -22,22 +22,23 @@
 }
 
 .code-area .text { 
-    -fx-fill: white; 
+    -fx-fill: #d4d4d4; 
 }
 
 .code-area .lineno { 
     -fx-background-color: #1e1e1e;
-    -fx-padding: 0 10px 0 20px;
+    -fx-padding: 0 8px 0 20px;
 }
 
 .code-area .lineno .text{ 
     -fx-background-color: #1e1e1e; 
-    -fx-font-size: 12.04685715983pt; 
+    -fx-font-size: 12pt; 
     -fx-fill: #858585;
 }
 
 .caret {
-    -fx-stroke: white;
+    -fx-stroke: #d4d4d4;
+    -fx-margin: 2px;
 }
 
 .viewport {
@@ -151,7 +152,7 @@
 }
 
 .menu-item .label {
-    -fx-text-fill: white;
+    -fx-text-fill: #d4d4d4;
     -fx-font-family: System;
 }
 
