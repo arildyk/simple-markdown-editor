@@ -439,20 +439,10 @@ public final class AppController implements Initializable {
         AnchorPane.setLeftAnchor(sp, 0.0);
         AnchorPane.setRightAnchor(sp, 0.0);
         AnchorPane.setBottomAnchor(sp, 5.0);
-        AnchorPane.setTopAnchor(sp, 5.0);
-        
-        AnchorPane.setRightAnchor(codeAreaContainer, mainScene.getWidth() / 2.0);
-        AnchorPane.setLeftAnchor(webViewContainer, mainScene.getWidth() / 2.0);
-        output.setPrefWidth(mainScene.getWidth() / 2.0);
-
-        AnchorPane.setLeftAnchor(output, mainScene.getWidth() / 2.0);
-        AnchorPane.setRightAnchor(output, 5.0);
-        AnchorPane.setBottomAnchor(output, 5.0);
-        AnchorPane.setTopAnchor(output, 5.0);
         
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            //parse();
+            parse();
             System.out.println(mainScene.getWidth() / 2.0);
         });
 
