@@ -13,6 +13,7 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 - [Prism.js](https://prismjs.com/)
 - [JSoup](https://jsoup.org/)
 - [RichTextFX](https://github.com/FXMisc/RichTextFX)
+- [Flying Saucer](https://github.com/flyingsaucerproject/flyingsaucer)
 
 ## License
 

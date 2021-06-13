@@ -1,6 +1,8 @@
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -11,6 +13,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import com.lowagie.text.DocumentException;
+
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -35,6 +40,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLAnchorElement;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 import Models.AppAttributeProvider;
 import javafx.application.Platform;
 import javafx.concurrent.Worker.State;
@@ -93,6 +99,7 @@ public final class AppController implements Initializable {
     private boolean fileChange = false;
     private String lastOpenedDirectory = System.getProperty("user.home"); 
     private String lastSavedDirectory = System.getProperty("user.home");
+    private String htmlContent;
 
     /**
      * Closes the application.
@@ -192,10 +199,9 @@ public final class AppController implements Initializable {
 
         output.getEngine().loadContent(htmlString);
 
+        htmlContent = htmlString;
+
         fileChange = true;
-
-        System.out.println(finalProcess);
-
     }
 
     public final void open() throws IOException {
@@ -271,6 +277,12 @@ public final class AppController implements Initializable {
         fileChange = false;
     }
 
+    private String htmlToXhtml(String html) {
+        org.jsoup.nodes.Document document = Jsoup.parse(html);
+        document.outputSettings().syntax(org.jsoup.nodes.Document.OutputSettings.Syntax.xml);
+        return document.html();
+    }
+
     /**
      * Opens a file chooser where a file will be created where the user will have to specify it's name and location.
      * @param event
@@ -280,19 +292,55 @@ public final class AppController implements Initializable {
     public final void saveAs(ActionEvent event) throws IOException {
 
         final FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter markdownFilter = new FileChooser.ExtensionFilter("Markdown files (*.md)", "*.md");
+        FileChooser.ExtensionFilter pdfFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+        FileChooser.ExtensionFilter htmlFilter = new FileChooser.ExtensionFilter("HTML Files (*.html, *.htm)", "*.html", "*.htm");
 
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
+        fileChooser.getExtensionFilters().addAll(markdownFilter, pdfFilter, htmlFilter);
         fileChooser.setInitialDirectory(new File(lastSavedDirectory));
 
         final File mdFileToSave = fileChooser.showSaveDialog(null);
 
-        if (mdFileToSave != null) {
+        final String selectedFileExtension = fileChooser.getSelectedExtensionFilter().getDescription();
+
+        if ((mdFileToSave != null) && (selectedFileExtension.equals(markdownFilter.getDescription()))) {
             path = Paths.get(mdFileToSave.toString());
 
             fileName.setText(path.getFileName().toString());
             filePathName.setText(path.getParent().toString());
 
             Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
+
+            fileChange = false;
+
+        } else if ((mdFileToSave != null) && (selectedFileExtension.equals(pdfFilter.getDescription()))) {
+            path = Paths.get(mdFileToSave.toString());
+
+            fileName.setText(path.getFileName().toString());
+            filePathName.setText(path.getParent().toString());
+
+            File output = new File(path.toString());
+            ITextRenderer iTextRenderer = new ITextRenderer();
+            iTextRenderer.setDocumentFromString(htmlToXhtml(htmlContent));
+            iTextRenderer.layout();
+            OutputStream os = new FileOutputStream(output);
+            try {
+                iTextRenderer.createPDF(os);
+            } catch (DocumentException e) {
+            // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            os.close();
+
+            fileChange = false;
+
+        } else if ((mdFileToSave != null) && (selectedFileExtension.equals(htmlFilter.getDescription()))) {
+            path = Paths.get(mdFileToSave.toString());
+
+            fileName.setText(path.getFileName().toString());
+            filePathName.setText(path.getParent().toString());
+
+            Files.writeString(path, htmlContent, StandardCharsets.UTF_8);
 
             fileChange = false;
         }
@@ -450,8 +498,8 @@ public final class AppController implements Initializable {
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
+            System.out.println(htmlContent);
         });
-
     }
 
 }
