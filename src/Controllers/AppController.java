@@ -105,6 +105,7 @@ public final class AppController implements Initializable {
 
             final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
+            alert.setTitle("Save File?");
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -235,6 +236,7 @@ public final class AppController implements Initializable {
 
             final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
+            alert.setTitle("Save File?");
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -316,7 +318,8 @@ public final class AppController implements Initializable {
         if ((!(input.getText().trim().isEmpty()) || !(input.getText() == null)) && (fileChange == true)) {
 
             final Alert alert = new Alert(AlertType.NONE, "Would you like to save your file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-
+            
+            alert.setTitle("Save File?");
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {

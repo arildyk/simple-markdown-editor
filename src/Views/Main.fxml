@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
@@ -48,7 +50,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <MenuBar prefHeight="40.0" prefWidth="40.0" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                  <MenuBar layoutX="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="0.0">
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
@@ -63,6 +65,11 @@
                         <Insets top="5.0" />
                      </padding>
                   </MenuBar>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="7.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="648.0" AnchorPane.topAnchor="13.0">
+                     <image>
+                        <Image url="@../sme2.png" />
+                     </image>
+                  </ImageView>
                </children></AnchorPane>
             <AnchorPane id="textAreaContainer" fx:id="codeAreaContainer" layoutX="-22.0" layoutY="84.0" prefHeight="690.0" prefWidth="670.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0em 0 0 0.5em;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="670.0" AnchorPane.topAnchor="40.0" />
             <AnchorPane id="webViewContainer" fx:id="webViewContainer" layoutX="651.0" layoutY="84.0" prefHeight="720.0" prefWidth="670.0" style="-fx-background-radius: 0 0em 0.5em 0; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="670.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
