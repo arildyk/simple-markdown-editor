@@ -57,7 +57,13 @@
                               <MenuItem mnemonicParsing="false" onAction="#newMdFile" text="New" />
                           <MenuItem mnemonicParsing="false" onAction="#chooseMdFile" text="Open" />
                               <MenuItem mnemonicParsing="false" onAction="#saveMdFile" text="Save" />
-                              <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
+                              <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As..." />
+                              <Menu mnemonicParsing="false" text="Export To...">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="PDF" />
+                                  <MenuItem mnemonicParsing="false" onAction="#exportAsHTML" text="HTML" />
+                                </items>
+                              </Menu>
                         </items>
                       </Menu>
                     </menus>

@@ -99,6 +99,8 @@ public final class AppController implements Initializable {
     private boolean fileChange = false;
     private String lastOpenedDirectory = System.getProperty("user.home"); 
     private String lastSavedDirectory = System.getProperty("user.home");
+    private String lastSavedHTMLDirectory = System.getProperty("user.home");
+    private String lastSavedPDFDirectory = System.getProperty("user.home");
     private String htmlContent;
 
     /**
@@ -183,7 +185,7 @@ public final class AppController implements Initializable {
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBold.ttf); font-weight: bolder; }\n" + 
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-ExtraBoldItalic.ttf); font-weight: bolder; font-style: italic; }\n" + 
         "              @font-face { font-family: EB Garamond; src: url(Fonts/EBGaramond-BoldItalic.ttf); font-weight: bold; font-style: italic; }\n" +
-        "              body { font-family: EB Garamond; font-size: 110%; }\n" +
+        "              body { font-family: EB Garamond; }\n" +
         "              img { max-width: 100%; max-height: 100%; }\n" +
         "              tr:nth-child(even) { background-color: #f2f2f2; }\n" +
         "              h1 { border-bottom: 1px solid #f2f2f2; padding-bottom: .3em; }\n" +
@@ -293,17 +295,13 @@ public final class AppController implements Initializable {
 
         final FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter markdownFilter = new FileChooser.ExtensionFilter("Markdown files (*.md)", "*.md");
-        FileChooser.ExtensionFilter pdfFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
-        FileChooser.ExtensionFilter htmlFilter = new FileChooser.ExtensionFilter("HTML Files (*.html, *.htm)", "*.html", "*.htm");
 
-        fileChooser.getExtensionFilters().addAll(markdownFilter, pdfFilter, htmlFilter);
+        fileChooser.getExtensionFilters().add(markdownFilter);
         fileChooser.setInitialDirectory(new File(lastSavedDirectory));
 
         final File mdFileToSave = fileChooser.showSaveDialog(null);
 
-        final String selectedFileExtension = fileChooser.getSelectedExtensionFilter().getDescription();
-
-        if ((mdFileToSave != null) && (selectedFileExtension.equals(markdownFilter.getDescription()))) {
+        if (mdFileToSave != null) {
             path = Paths.get(mdFileToSave.toString());
 
             fileName.setText(path.getFileName().toString());
@@ -313,39 +311,62 @@ public final class AppController implements Initializable {
 
             fileChange = false;
 
-        } else if ((mdFileToSave != null) && (selectedFileExtension.equals(pdfFilter.getDescription()))) {
-            path = Paths.get(mdFileToSave.toString());
+        } 
+        
+        lastSavedDirectory = mdFileToSave.getParent();
+    }
 
-            fileName.setText(path.getFileName().toString());
-            filePathName.setText(path.getParent().toString());
+    public final void exportAsPDF(ActionEvent event) throws IOException, DocumentException {
 
-            File output = new File(path.toString());
+        final FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter pdfFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+
+        fileChooser.getExtensionFilters().add(pdfFilter);
+        fileChooser.setInitialDirectory(new File(lastSavedPDFDirectory));
+
+        final File mdFileToExport = fileChooser.showSaveDialog(null);
+
+        if (mdFileToExport != null) {
+
+            Path pdfPath = Paths.get(mdFileToExport.toString());
+
+            File output = new File(pdfPath.toString());
+
+            OutputStream os = new FileOutputStream(output);
+
             ITextRenderer iTextRenderer = new ITextRenderer();
             iTextRenderer.setDocumentFromString(htmlToXhtml(htmlContent));
             iTextRenderer.layout();
-            OutputStream os = new FileOutputStream(output);
-            try {
-                iTextRenderer.createPDF(os);
-            } catch (DocumentException e) {
-            // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            iTextRenderer.createPDF(os);
+            
             os.close();
 
             fileChange = false;
+        }
 
-        } else if ((mdFileToSave != null) && (selectedFileExtension.equals(htmlFilter.getDescription()))) {
-            path = Paths.get(mdFileToSave.toString());
+        lastSavedPDFDirectory = mdFileToExport.getParent();
+    }
 
-            fileName.setText(path.getFileName().toString());
-            filePathName.setText(path.getParent().toString());
+    public final void exportAsHTML(ActionEvent event) throws IOException {
 
-            Files.writeString(path, htmlContent, StandardCharsets.UTF_8);
+        final FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter htmlFilter = new FileChooser.ExtensionFilter("HTML Files (*.html, *.htm)", "*.html", "*.htm");
+
+        fileChooser.getExtensionFilters().add(htmlFilter);
+        fileChooser.setInitialDirectory(new File(lastSavedHTMLDirectory));
+
+        final File mdFileToExport = fileChooser.showSaveDialog(null);
+
+        if (mdFileToExport != null) {
+
+            Path htmlPath = Paths.get(mdFileToExport.toString());
+
+            Files.writeString(htmlPath, htmlContent, StandardCharsets.UTF_8);
 
             fileChange = false;
         }
-        
-        lastSavedDirectory = mdFileToSave.getParent();
+
+        lastSavedHTMLDirectory = mdFileToExport.getParent();
     }
 
     public final void newMd() {
