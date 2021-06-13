@@ -3,6 +3,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,6 +33,8 @@ public class App extends Application {
             scene.getStylesheets().add("Views/application.css");
 
             primaryStage.setScene(scene);
+            primaryStage.getIcons().add(new Image(App.class.getResourceAsStream( "sme.png" )));
+            primaryStage.setTitle("SME");
             primaryStage.show();
 
             // Make the window draggable
@@ -52,6 +55,8 @@ public class App extends Application {
                     primaryStage.setY(event.getScreenY() - yOffset);
                 }
             });
+
+            
 
         } catch (Exception e) {
             e.printStackTrace();

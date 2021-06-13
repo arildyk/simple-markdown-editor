@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -36,7 +35,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLAnchorElement;
-
 import Models.AppAttributeProvider;
 import javafx.application.Platform;
 import javafx.concurrent.Worker.State;
@@ -93,6 +91,8 @@ public final class AppController implements Initializable {
     private final VirtualizedScrollPane<CodeArea> sp = new VirtualizedScrollPane<>(input);
     private Path path;
     private boolean fileChange = false;
+    private String lastOpenedDirectory = System.getProperty("user.home"); 
+    private String lastSavedDirectory = System.getProperty("user.home");
 
     /**
      * Closes the application.
@@ -201,7 +201,7 @@ public final class AppController implements Initializable {
         final FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setInitialDirectory(new File(lastOpenedDirectory));
 
         final File mdFileToLoad = fileChooser.showOpenDialog(null);
 
@@ -219,6 +219,8 @@ public final class AppController implements Initializable {
 
             fileChange = false;
         }
+
+        lastOpenedDirectory = mdFileToLoad.getParent();
     }
 
     /**
@@ -278,6 +280,7 @@ public final class AppController implements Initializable {
         final FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (*.md)", "*.md"));
+        fileChooser.setInitialDirectory(new File(lastSavedDirectory));
 
         final File mdFileToSave = fileChooser.showSaveDialog(null);
 
@@ -288,10 +291,11 @@ public final class AppController implements Initializable {
             filePathName.setText(path.getParent().toString());
 
             Files.writeString(path, input.getText(), StandardCharsets.UTF_8);
+
+            fileChange = false;
         }
-
-        fileChange = false;
-
+        
+        lastSavedDirectory = mdFileToSave.getParent();
     }
 
     public final void newMd() {
@@ -443,7 +447,6 @@ public final class AppController implements Initializable {
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
-            System.out.println(mainScene.getWidth() / 2.0);
         });
 
     }
