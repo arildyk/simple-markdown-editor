@@ -1,3 +1,5 @@
+package Controllers;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -519,7 +521,6 @@ public final class AppController implements Initializable {
         // Parse the editor each time the user types
         input.textProperty().addListener((observableValue, oldValue, newValue) -> {
             parse();
-            System.out.println(htmlContent);
         });
     }
 
