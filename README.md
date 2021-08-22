@@ -1,7 +1,7 @@
 # simple-markdown-editor
 
 <p align="center">
-  <img src="src/sme.png" />
+  <img src="images/simple-markdown-editor-screenshot.png" />
 </p>
 
 A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. The most important aspects of this application are the abilities to open a Markdown file, allow the user to edit the file, and finally save the file.
