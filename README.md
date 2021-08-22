@@ -15,6 +15,12 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 - [RichTextFX](https://github.com/FXMisc/RichTextFX)
 - [Flying Saucer](https://github.com/flyingsaucerproject/flyingsaucer)
 
+## Installation
+
+Download sme.zip
+
+With JavaFX installed, inside `.vscode`, change the paths to the JavaFX jar files to your own paths in the *settings.json*. In the *launch.json* on the `vmArgs`, change the module path to your own.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
