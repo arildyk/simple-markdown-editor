@@ -14,6 +14,7 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 - [JSoup](https://jsoup.org/)
 - [RichTextFX](https://github.com/FXMisc/RichTextFX)
 - [Flying Saucer](https://github.com/flyingsaucerproject/flyingsaucer)
+- [iText 2.1.7](https://github.com/hwinkler/itext2)
 
 ## Installation
 
