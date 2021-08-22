@@ -17,9 +17,7 @@ A Markdown Editor created powered by Java that uses GitHub Markdown flavouring. 
 
 ## Installation
 
-Download sme.zip
-
-With JavaFX installed, inside `.vscode`, change the paths to the JavaFX jar files to your own paths in the *settings.json*. In the *launch.json* on the `vmArgs`, change the module path to your own.
+Clone the repository. With JavaFX installed, inside `.vscode`, change the paths to the JavaFX jar files to your own paths in the *settings.json*. In the *launch.json* on the `vmArgs`, change the module path to your own.
 
 ## License
 
